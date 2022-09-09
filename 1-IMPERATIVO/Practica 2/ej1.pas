@@ -95,7 +95,7 @@ begin
 end;
 
 procedure ImprimirLista2(pri:lista);
-begin
+begin // ESTE NO FUNCIONA, PREGUNTAR
 	if pri<>nil then begin
 		ImprimirLista(pri^.sig);
 		writeln(pri^.dato);
