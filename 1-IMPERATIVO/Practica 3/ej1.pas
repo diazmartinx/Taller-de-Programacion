@@ -123,13 +123,17 @@ end;
 
 function BuscarNombre(A:arbol; x:string):boolean;
 // PREGUNTAR, Recorre todo el arbol?
+
+var aux:boolean;
 begin
 	if A=nil then BuscarNombre:=false
-	else if A^.dato.nombre=x then BuscarNombre:=true
-	else begin
-		BuscarNombre:=BuscarNombre(A^.HI,x);
-		if BuscarNombre=false then BuscarNombre:=BuscarNombre(A^.HD,x);
-	end;
+	else begin if A^.dato.nombre=x then BuscarNombre:=true
+	           else begin
+		              aux:=BuscarNombre(A^.HI,x);
+		              if not aux then aux:=BuscarNombre(A^.HD,x);
+	                  BuscarNombre:=aux;
+	                end;
+	     end;
 end;
 
 function Suma(A:arbol):integer;
@@ -148,11 +152,9 @@ function Rango(A:arbol; min,max:integer):integer;
 // BUSCA EN TODO EL ARBOL, PREGUNTAR
 begin
 	if A=nil then Rango:=0
-	//else if A^.dato.numSoc<min then Rango:=0+Rango(A^.HD,min,max)//Si es menor -> busca a la derecha
-	//else if A^.dato.numSoc>max then Rango:=0+Rango(A^.HI,min,max)//Si es mayor -> busca a la izq
-	else if (A^.dato.numSoc>min) and (A^.dato.numSoc<max) then
-		Rango:= 1 + Rango(A^.HI,min,max) + Rango(A^.HD,min,max)
-	else Rango:= 0 + Rango(A^.HI,min,max) + Rango(A^.HD,min,max);
+	else if (A^.dato.numSoc>min) and (A^.dato.numSoc<max) then Rango:= 1 + Rango(A^.HI,min,max) + Rango(A^.HD,min,max)
+	else if A^.dato.numSoc>=max then Rango:= 0 + Rango(A^.HI,min,max)
+	else if A^.dato.numSoc<=min then Rango:= 0 + Rango(A^.HD,min,max);
 end;
 
 Procedure Creciente (a:arbol);

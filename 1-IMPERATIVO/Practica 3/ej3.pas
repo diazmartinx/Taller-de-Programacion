@@ -80,16 +80,23 @@ begin
 			writeln('Legajo: ',A^.dato.legajo,' DNI: ',A^.dato.dni,' ANIO: ',A^.dato.anio);
 			Rango(A^.HI,min,max);
 			Rango(A^.HD,min,max);
-			end
+		end;
 end;
 
-procedure DNIMAX(A:arbol; max:integer);
+procedure DNIMAX(A:arbol; var max:integer);
 begin
 	if A<>nil then begin
 		if A^.dato.dni>max then max:=A^.dato.dni;
 		DNIMAX(A^.HI,max);
 		DNIMAX(A^.HD,max);
 	end;
+end;
+
+function Impar(A:arbol):integer;
+begin
+	if A=nil then Impar:=0
+	else if (A^.dato.legajo mod 2=0) then Impar:=0+Impar(A^.HI)+Impar(A^.HD)
+	else Impar:=1+Impar(A^.HI)+Impar(A^.HD)
 end;
 
 var
@@ -101,5 +108,6 @@ begin
 	Rango(A,2,6);
 	max:=-9999;
 	DNIMAX(A,max);
-	writeln('DNIMAX: ',max);
+	writeln('DNIMAX: ',max);writeln;
+	writeln('Impares: ',Impar(A));
 end.
