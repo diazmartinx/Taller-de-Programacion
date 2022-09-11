@@ -41,8 +41,24 @@ begin
 	else if dato.codProd < A^.dato.codProd then Agregar(A^.HI, dato)
 	else Agregar(A^.HD, dato);
 end;
+
+procedure AgregarAcum(var A:arbol; dato:TRVenta);
+begin
+	if A=nil then begin
+		new(A);
+		A^.dato:=dato;
+		A^.HI:=nil;
+		A^.HD:=nil;
+	end
+	//si es cod es igual, suma cant
+	else if dato.codProd = A^.dato.codProd then A^.dato.cant:=A^.dato.cant+dato.cant
+	//busca por izq
+	else if dato.codProd < A^.dato.codProd then AgregarAcum(A^.HI, dato)
+	//bussca por derecha
+	else AgregarAcum(A^.HD, dato);
+end;
 	
-procedure GenerarArbol(var A:arbol);
+procedure GenerarArbol(var A:arbol; var AA:arbol);
 var venta:TRVenta;
 begin
 	writeln('Ingrese codigo de producto (0 fin)');readln(venta.codProd);
@@ -51,19 +67,45 @@ begin
 		venta.fecha:=0;
 		
 		Agregar(A, venta);
+		AgregarAcum(AA, venta);
 		
 		writeln('Ingrese codigo de producto (0 fin)');readln(venta.codProd);
 	end;
 end;
 
-procedure GenerarArbolAcum(A:arbol; var AA:arbol);
+procedure Imprimir(A:arbol);
 begin
+	if A<>nil then begin
+		Imprimir(A^.HI);
+		writeln('COD: ',A^.dato.codProd,' CANT: ', A^.dato.cant);
+		Imprimir(A^.HD);
+	end;
+end;
+
+function CantTotalAcum(A:arbol; codigo:integer):integer;
+begin
+	if A=nil then CantTotalAcum:=0
+	else if A^.dato.codProd=codigo then CantTotalAcum:=A^.dato.cant
+	else if codigo<A^.dato.codProd then CantTotalAcum:=CantTotalAcum(A^.HI,codigo)
+	else CantTotalAcum:=CantTotalAcum(A^.HD,codigo)
+end;
+
+function CantTotalNoAcum(A:arbol; codigo:integer):integer;
+begin
+	if A=nil then CantTotalNoAcum:=0
+	else if A^.dato.codProd=codigo then CantTotalNoAcum:=A^.dato.cant+CantTotalNoAcum(A^.HD,codigo)
+	else if A^.dato.codProd<codigo then CantTotalNoAcum:=0+CantTotalNoAcum(A^.HD,codigo)
+	else CantTotalNoAcum:=0+CantTotalNoAcum(A^.HI,codigo)
 end;
 
 var
 	A,AA:arbol;
 	
 begin
-	GenerarArbol(A);
-	GenerarArbolAcum(A,AA);
+	GenerarArbol(A, AA);
+	Imprimir(A);writeln;
+	Imprimir(AA);writeln;
+	
+	writeln('Cantidad Vendida(1): ',CantTotalAcum(AA,1));
+	writeln('Cantidad Vendida(1): ',CantTotalNoAcum(A,1));
 end.
