@@ -64,15 +64,15 @@ function Cantidad(A:arbol; marca:integer):integer;
 begin
 	if A=nil then Cantidad:=0
 	else if A^.dato.marca=marca then Cantidad:=1+Cantidad(A^.hi,marca)+Cantidad(A^.hd,marca)
-	else Cantidad:=0+Cantidad(A^.hi,marca)+Cantidad(A^.hi,marca);
+	else Cantidad:=0+Cantidad(A^.hi,marca)+Cantidad(A^.hd,marca);
 end;
 
 procedure GenerarVector(var V:TV; A:arbol);
 begin
 	if A<>nil then begin
 		GenerarVector(V,A^.hi);
-		Insertar(V[A^.dato.fab],A^.dato);
 		GenerarVector(V,A^.hd);
+		Insertar(V[A^.dato.fab],A^.dato);
 	end;
 end;
 
@@ -90,7 +90,7 @@ var
 	V:TV;
 begin
 	Randomize;
-	Generar(A,500);
+	Generar(A,100);
 	Imprimir(A);
 	marca:=2;
 	writeln('Cantidad de auto de marca ',marca,': ',Cantidad(A,marca));
