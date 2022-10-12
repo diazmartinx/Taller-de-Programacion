@@ -25,11 +25,11 @@ public class Ej03QueImprimeB {
         p2.setNombre("Julio Toledo");
         p2.setDNI(22433516);
         p2.setEdad(51);
-        p1 = p2;
-        p1.setEdad( p1.getEdad() + 1 );
+        p1 = p2; //p1 apunta a la instancia de p2
+        p1.setEdad( p1.getEdad() + 1 ); //modifica una unica instancia
         System.out.println(p2.toString());
         System.out.println(p1.toString());
-        System.out.println( (p1 == p2) );
+        System.out.println( (p1 == p2) ); //true, apuntan a la misma instancia
     }
     
 }

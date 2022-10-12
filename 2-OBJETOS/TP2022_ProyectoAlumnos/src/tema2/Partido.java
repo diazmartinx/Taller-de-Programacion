@@ -15,7 +15,7 @@ public class Partido {
     public Partido(){
     
     }
-
+    
     public Partido(String unLocal, String unVisitante, int unGolLocal, int unGolVisitante){
         local = unLocal;
         visitante = unVisitante;
@@ -76,6 +76,10 @@ public class Partido {
          }
          return ganador;
                  
-    }	    
+    }	
+    
+    public String toString(){
+        return this.getLocal()+": "+this.getGolesLocal()+" | "+this.getVisitante()+": "+this.getGolesVisitante();
+    }
     
 }
