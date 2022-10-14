@@ -15,11 +15,13 @@ public class MainVisorFiguras {
     Cuadrado c1 = new Cuadrado(10,"Violeta","Rosa");
     Rectangulo r= new Rectangulo(20,10,"Azul","Celeste");
     Cuadrado c2= new Cuadrado(30,"Rojo","Naranja");
+    
+    visor.guardar(c1);
+    visor.guardar(r);
+    visor.guardar(c2);
 
-    visor.mostrar(c1);
-    visor.mostrar(r);
-    visor.mostrar(c2);
+    visor.mostrar();
 
-    System.out.println(visor.getMostradas());
+    System.out.println(visor.getGuardadas());
    }
 }
