@@ -26,7 +26,7 @@ public class Funcion {
         instanciaButacas();
     }
     
-    public void instanciaButacas(){
+    private void instanciaButacas(){
         for (int i=0;i<n;i++){
             for (int j=0;j<m;j++){
                 sala[i][j] = new Butaca(i,j);
