@@ -1,0 +1,73 @@
+programa ej2
+procesos
+{_________________________________________________________________}
+  proceso JuntarPapeles(ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+{_________________________________________________________________}
+  proceso RecorrerLado
+  variables
+    papeles:numero
+  comenzar
+    repetir 19
+      JuntarPapeles(papeles)
+      mover
+    JuntarPapeles(papeles)
+    Informar(papeles)
+  fin
+{_________________________________________________________________}
+areas
+  {esquina_1: AreaPC(10,10,10,10)
+  {esquina_2: AreaPC(10,30,10,30)}
+  {esquina_3: AreaPC(30,30,30,30)}
+  {esquina_4: AreaPC(30,10,30,10)}
+  area_1: AreaP(10,10,10,29)
+  area_2: AreaP(10,30,29,30)
+  area_3: AreaP(30,11,30,30)
+  area_4: AreaP(11,10,30,10)
+{_________________________________________________________________}
+robots
+  robot robot1
+  comenzar
+    RecorrerLado
+  fin
+  {_________________________________________________________________}
+  robot robot2
+  comenzar
+    derecha
+    RecorrerLado
+  fin
+  {_________________________________________________________________}
+  robot robot3
+  comenzar
+    repetir 2
+      derecha
+    RecorrerLado
+  fin
+  {_________________________________________________________________}
+  robot robot4
+  comenzar
+    repetir 3
+      derecha
+    RecorrerLado
+  fin
+{_________________________________________________________________}
+variables
+  robot_uno: robot1
+  robot_dos: robot2
+  robot_tres: robot3
+  robot_cuatro: robot4
+{_________________________________________________________________}
+comenzar
+  AsignarArea(robot_uno,area_1)
+  AsignarArea(robot_dos,area_2)
+  AsignarArea(robot_tres,area_3)
+  AsignarArea(robot_cuatro,area_4)
+  Iniciar(robot_uno,10,10)
+  Iniciar(robot_dos,10,30)
+  Iniciar(robot_tres,30,30)
+  Iniciar(robot_cuatro,30,10)
+fin

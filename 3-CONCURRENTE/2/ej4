@@ -1,0 +1,118 @@
+programa ej4
+procesos
+  proceso Limpiar(ES flores: numero; ES papeles:numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:=papeles+1
+  fin
+  proceso Maximo(ES idMax: numero; ES cantMax:numero ;E cant:numero; E id:numero)
+  comenzar
+    si cant > cantMax
+      cantMax:=cant
+      idMax:=id
+  fin
+areas
+  a1: AreaPC(25,25,75,75)
+  a2: AreaPC(1,1,50,1)
+robots
+  robot recolector
+  variables
+    papeles, flores, total, id, idMax: numero
+    AvInicio,CaInicio,AvFin,CaFin: numero
+    atento:boolean
+  comenzar
+    papeles:=0
+    flores:=0
+    AvInicio:=PosAv
+    CaInicio:=PosCa
+    RecibirMensaje(id,RF)
+    RecibirMensaje(atento,RF)
+    mientras atento
+      Random(AvFin,25,75)
+      Random(CaFin,25,75)
+      Pos(AvFin,CaFin) {va a esquina random}
+      Limpiar(flores,papeles)
+      Pos(AvInicio,CaInicio) {vuelve al inicio}
+      EnviarMensaje(V,RF) {avisa que termino}
+      RecibirMensaje(atento,RF)
+    total:=flores+papeles
+    EnviarMensaje(id,RF)
+    EnviarMensaje(total,RF)
+    RecibirMensaje(idMax,RF)
+    si idMax=id
+      Pos(50,50)
+  fin
+  robot fisc
+  variables
+    id, idMax, cantMax, cant: numero
+    termino: boolean
+  comenzar
+    idMax:=-1
+    cantMax:=-1
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    repetir 10
+      Random(id,1,4)
+      si id=1
+        EnviarMensaje(V,r1)
+      si id=2
+        EnviarMensaje(V,r2)
+      si id=3
+        EnviarMensaje(V,r3)
+      si id=4
+        EnviarMensaje(V,r4)
+      RecibirMensaje(termino,*)
+   {avisar que termino}
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+    {Calcula el mayor}
+    repetir 4
+      RecibirMensaje(id,*)
+      si id=1
+        RecibirMensaje(cant,r1)
+        Maximo(idMax,cantMax,cant,id)
+      si id=2
+        RecibirMensaje(cant,r2)
+        Maximo(idMax,cantMax,cant,id)
+      si id=3
+        RecibirMensaje(cant,r3)
+        Maximo(idMax,cantMax,cant,id)
+      si id=4
+        RecibirMensaje(cant,r4)
+        Maximo(idMax,cantMax,cant,id)
+     {avisar al robot que gano}
+    EnviarMensaje(idMax,r1)
+    EnviarMensaje(idMax,r2)
+    EnviarMensaje(idMax,r3)
+    EnviarMensaje(idMax,r4) 
+  fin
+variables
+  RF: fisc
+  r1, r2, r3, r4: recolector
+comenzar
+  {Asigna area comun}
+  AsignarArea(RF,a2)
+  AsignarArea(r1,a2)
+  AsignarArea(r2,a2)
+  AsignarArea(r3,a2)
+  AsignarArea(r4,a2)
+  {Asigna cuadrado}
+  AsignarArea(r1,a1)
+  AsignarArea(r2,a1)
+  AsignarArea(r3,a1)
+  AsignarArea(r4,a1)
+  {Inicia Robots}
+  Iniciar(RF,1,1)
+  Iniciar(r1,25,1)
+  Iniciar(r2,30,1)
+  Iniciar(r3,35,1)
+  Iniciar(r4,40,1)
+fin

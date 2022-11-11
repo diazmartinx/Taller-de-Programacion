@@ -1,0 +1,109 @@
+programa ej6
+procesos
+  proceso LimpiarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso LimpiarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso LimpiarEsquina(E flores:boolean;E papeles:boolean)
+  comenzar
+    si flores
+      LimpiarF
+    si papeles
+      LimpiarP
+  fin
+  proceso Cuadrante(E tam: numero; E flores: boolean; E papeles: boolean)
+  variables
+    anterior:numero
+  comenzar
+    repetir tam
+      LimpiarEsquina(flores,papeles)
+      anterior:=PosCa
+      BloquearEsquina(PosAv,PosCa+1)
+      mover
+      LiberarEsquina(PosAv,anterior)
+    derecha
+    repetir tam
+      LimpiarEsquina(flores,papeles)
+      anterior:=PosAv
+      BloquearEsquina(PosAv+1,PosCa)
+      mover  
+      LiberarEsquina(anterior,PosCa)
+    LimpiarEsquina(flores,papeles)
+  fin
+  proceso Depositar
+  comenzar
+    mientras (HayFlorEnLaBolsa | HayPapelEnLaBolsa) & (PosCa<100)
+      si HayFlorEnLaBolsa
+        depositarFlor
+      si HayPapelEnLaBolsa
+        depositarPapel
+      mover
+  fin
+areas
+  AF: AreaP(1,1,1,1)
+  AREC: AreaPC(2,2,16,16)
+  ADEP: AreaPC(1,20,100,22)
+robots
+  robot recolector
+  variables
+    id, calle:numero
+  comenzar
+    RecibirMensaje(id,rf)
+    si id = 1
+      Cuadrante(6,V,F)
+    si id = 2
+      Cuadrante(10,V,V)
+    si id = 3
+      Cuadrante(7,F,V)
+    {envia que termino}
+    EnviarMensaje(id,rf)
+    EnviarMensaje(id,rf)
+    RecibirMensaje(calle,rf)
+    Pos(1,calle)
+    Depositar
+  fin
+  robot fisca
+  variables
+    id, calle:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    calle:=20
+    RecibirMensaje(id,r1)
+    RecibirMensaje(id,r2)
+    RecibirMensaje(id,r3)
+    repetir 3
+      RecibirMensaje(id,*)
+      si id=1
+        EnviarMensaje(calle,r1)
+      si id=2
+        EnviarMensaje(calle,r2)
+      si id=3
+        EnviarMensaje(calle,r3)
+      calle:=calle+1 
+  fin
+variables
+  r1,r2,r3: recolector
+  rf: fisca
+comenzar
+  AsignarArea(r1,AREC)
+  AsignarArea(r2,AREC)
+  AsignarArea(r3,AREC)
+  AsignarArea(rf,AF)
+  
+  AsignarArea(r1,ADEP)
+  AsignarArea(r2,ADEP)
+  AsignarArea(r3,ADEP)
+  
+  Iniciar(rf,1,1)
+  Iniciar(r1,2,2)
+  Iniciar(r2,5,5)
+  Iniciar(r3,9,9)
+fin

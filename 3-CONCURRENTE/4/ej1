@@ -1,0 +1,89 @@
+programa ej1
+areas
+  A1 : AreaPC(1,1,1,100)
+  A2 : AreaPC(2,1,2,100)
+  A3 : AreaPC(3,1,3,100)
+  AP : AreaP(100,100,100,100) 
+robots
+  robot recolector
+  variables
+    id, cant, av, ca:numero
+  comenzar
+    RecibirMensaje(id,rj)
+    mientras PosCa<100
+      Random(cant,1,4)
+      {Solicitar al servidor que deposite flores}
+      EnviarMensaje(id,rj) {se identifica}
+      EnviarMensaje(cant,rj)
+      EnviarMensaje(PosAv,rj)
+      EnviarMensaje(PosCa+1,rj)
+      {Confirmacion del servidor}
+      RecibirMensaje(cant,rj)
+      mover
+      repetir (cant)
+        tomarFlor
+      repetir (cant)
+        si PosCa<100
+          depositarFlor
+          mover
+      EnviarMensaje(0,rj)
+    EnviarMensaje(1,rj)    
+  fin
+  robot jefe
+  variables
+    id, cant, av, ca, terminaron, aux: numero
+  comenzar
+    terminaron:=0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    mientras terminaron<3
+      RecibirMensaje(id,*)
+      Informar('asd',id)
+      si id=1
+        RecibirMensaje(cant,r1)
+        RecibirMensaje(av,r1)
+        RecibirMensaje(ca,r1)
+      si id=2
+        RecibirMensaje(cant,r2)
+        RecibirMensaje(av,r2)
+        RecibirMensaje(ca,r2)
+      si id=3
+        RecibirMensaje(cant,r3)
+        RecibirMensaje(av,r3)
+        RecibirMensaje(ca,r3)
+      repetir cant
+        tomarFlor
+      Pos(av,ca)
+      repetir cant
+        depositarFlor
+      Pos(100,100)
+      {Avisar que ya estan las flores}
+      si id=1
+        EnviarMensaje(cant,r1)
+        RecibirMensaje(aux,r1)
+      si id=2
+        EnviarMensaje(cant,r2)
+        RecibirMensaje(aux,r1)
+      si id=3
+        EnviarMensaje(cant,r3)
+        RecibirMensaje(aux,r1)
+      terminaron:=terminaron+aux
+  fin
+variables
+  r1,r2,r3: recolector
+  rj: jefe
+comenzar
+  AsignarArea(r1,A1)
+  AsignarArea(r2,A2)
+  AsignarArea(r3,A3)
+  AsignarArea(rj,A1)
+  AsignarArea(rj,A2)
+  AsignarArea(rj,A3)
+  AsignarArea(rj,AP)
+  Iniciar(rj,100,100)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+fin
+

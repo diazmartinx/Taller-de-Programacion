@@ -1,0 +1,74 @@
+programa ej4
+procesos
+  proceso LimpiarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+ {__________________________}
+  proceso LimpiarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+ {__________________________}
+  proceso RecorrerAvenida(E flores: boolean; E papeles: boolean)
+  comenzar
+    repetir 99
+      si flores
+        LimpiarF
+      si papeles
+        LimpiarP
+      mover
+    si flores
+      LimpiarF
+    si papeles
+      LimpiarP
+  fin
+ {__________________________}
+  proceso Circuito(E flores:boolean)
+  comenzar
+    repetir 24
+      si flores
+        RecorrerAvenida(V,F)
+      sino
+        RecorrerAvenida(F,V)
+      Pos(PosAv+1,1)
+    si flores
+      RecorrerAvenida(V,F)
+    sino
+      RecorrerAvenida(F,V)
+
+  fin
+areas
+  a1: AreaP(1,1,25,100)
+  a2: AreaP(26,1,50,100)
+  a3: AreaP(51,1,75,100)
+  a4: AreaP(76,1,100,100)
+robots
+  robot robotF
+  comenzar
+    Circuito(V)
+  fin
+  {____________________________}
+  robot robotP
+  comenzar
+    Circuito(F)
+  fin
+variables
+  rf1: robotF
+  rf2: robotF
+  rp1: robotP
+  rp2: robotP
+comenzar
+  AsignarArea(rf1,a1)
+  AsignarArea(rf2,a3)
+  AsignarArea(rp1,a2)
+  AsignarArea(rp2,a4)
+  Iniciar(rf1,1,1)
+  Iniciar(rp1,26,1)
+  Iniciar(rf2,51,1)
+  Iniciar(rp2,76,1)
+fin 
+
+

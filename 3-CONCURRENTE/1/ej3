@@ -1,0 +1,87 @@
+programa ej3
+{__________________________________}
+procesos
+  proceso ContarFlores(ES flores: numero)
+  variables
+    cant: numero
+  comenzar
+    cant:=0
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      cant:=cant+1
+    flores:=flores+cant
+    mientras(cant>0)
+      depositarFlor
+      cant:=cant-1
+  fin
+{__________________________________}
+  proceso ContarPapeles(ES papeles: numero)
+  variables
+    cant: numero
+  comenzar
+    cant:=0
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      cant:=cant+1
+    papeles:=papeles+cant
+    mientras(cant>0)
+      depositarPapel
+      cant:=cant-1
+  fin
+{__________________________________}
+  proceso RecorrerEscalon(E tam: numero; ES supero: boolean)
+  variables
+    CantF: numero
+    CantP: numero
+  comenzar
+    CantF:=0
+    CantP:=0
+    supero:=F
+    repetir tam
+      ContarFlores(CantF)
+      ContarPapeles(CantP)
+      mover
+    derecha
+    repetir tam
+      ContarFlores(CantF)
+      ContarPapeles(CantP)
+      mover
+    ContarFlores(CantF)
+    ContarPapeles(CantP)
+    repetir 3
+      derecha
+    supero:=CantP=(CantF+1)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+{__________________________________}
+robots
+  robot robot1
+  variables
+    cantSupero: numero
+    escalon: numero
+    supero: boolean
+  comenzar
+    cantSupero:=0
+    escalon:=0
+    mientras(escalon<5)
+      escalon:=escalon+2
+      RecorrerEscalon(escalon,supero)
+      si supero
+        cantSupero:=cantSupero+1
+    Informar(cantSupero)
+  fin
+{__________________________________}
+variables
+  r_uno: robot1
+  r_dos: robot1
+  r_tres: robot1
+{__________________________________}
+comenzar
+  AsignarArea(r_uno,ciudad)
+  AsignarArea(r_dos,ciudad)
+  AsignarArea(r_tres,ciudad)
+  Iniciar(r_uno,22,6)
+  Iniciar(r_dos,17,10)
+  Iniciar(r_tres,12,14)
+fin

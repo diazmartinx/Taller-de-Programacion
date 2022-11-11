@@ -1,0 +1,57 @@
+programa ej1
+procesos
+  proceso LimpiarF(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:=flores+1
+  fin
+  proceso Depositar
+  comenzar
+    Pos(10,10) {choque}
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+    mientras(HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+areas
+  AF: AreaPC(1,1,5,10)
+  AP: AreaPC(6,1,10,9)
+  AFin: AreaC(10,10,10,10)
+  EF1: AreaP(6,10,6,10)
+  EF2: AreaP(7,10,7,10)
+  EP1: AreaP(8,10,8,10)
+  EP2: AreaP(9,10,9,10)
+robots
+  robot rf
+  variables
+    av, ca, avF, caF, flores: numero
+  comenzar
+    flores:=0
+    av:=PosAv
+    ca:=PosCa
+    repetir 5
+      Random(avF,1,5)
+      Random(caF,1,10)
+      BloquearEsquina(avF,caF)
+      Pos(avF,caF) {Posibilidad de choque}
+      LimpiarF(flores)
+      Pos(av,ca) {vuelve al inicio}
+      LiberarEsquina(avF,caF)
+    BloquearEsquina(10,10)
+    Depositar
+    Pos(av,ca)
+    LiberarEsquina(10,10)
+  fin
+variables
+  rf1, rf2: rf
+comenzar
+  AsignarArea(rf1,AF)
+  AsignarArea(rf1,EF1)
+  AsignarArea(rf1,AFin)
+  AsignarArea(rf2,AF)
+  AsignarArea(rf2,EF2)
+  AsignarArea(rf2,AFin)
+  Iniciar(rf1,6,10)
+  Iniciar(rf2,7,10)
+fin
