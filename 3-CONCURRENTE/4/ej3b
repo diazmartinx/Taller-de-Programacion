@@ -13,15 +13,17 @@ areas
 robots
   robot limpiador
   variables
-    id, cant: numero
+    id, cant, etapa: numero
     ok: boolean
   comenzar
     cant:=0
     RecibirMensaje(id,rc)
+    Random(etapa,1,5){primera etapa}
     repetir 100
       LimpiarP
       cant:=cant+1
-      si cant=10
+      si cant=etapa
+        Random(etapa,1,5){nueva etapa siguiente}
         si id=1
           EnviarMensaje(V,r2)
           EnviarMensaje(V,r3)
