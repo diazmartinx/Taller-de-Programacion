@@ -10,23 +10,26 @@ package tema4;
  */
 public class Circulo extends Figura {
     private double radio;
-    private double pi = Math.PI;
-    
-    public Circulo(double unRadio, String unColorRelleno, String unColorLinea){
-        super(unColorRelleno,unColorLinea);
-        setRadio(unRadio);
+    private final double pi = Math.PI;
+
+    public Circulo(double radio, String colorRelleno, String colorLinea) {
+        super(colorRelleno, colorLinea);
+        this.radio = radio;
     }
-    
-    public void setRadio(double r){
-        radio=r;
-    }
-    public double getRadio(){
+
+    public double getRadio() {
         return radio;
     }
+
+    public void setRadio(double radio) {
+        this.radio = radio;
+    }
     
+    @Override
     public double calcularPerimetro(){
         return 2*getRadio()*pi;
     }
+    @Override
     public double calcularArea(){
         return getRadio()*getRadio()*pi;
     }

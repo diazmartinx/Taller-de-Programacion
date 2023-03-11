@@ -11,7 +11,7 @@ package tema4;
 public class ej03 {
     
     public static void main(String[] args){
-        Trabajador t1 = new Trabajador("Martin",456,70,"Programador");
+        Trabajador t1 = new Trabajador("Programador","Martin",456,70);
         System.out.println(t1.toString());
         Persona p1 = new Persona("Martin",456,70);
         System.out.println(p1.toString());

@@ -10,46 +10,30 @@ import tema2.*;
 
 public class Persona {
     private String nombre;
-    private int DNI;
+    private int dni;
     private int edad; 
-    
-    public Persona(String unNombre, int unDNI, int unaEdad){
-        nombre = unNombre;
-        DNI = unDNI;
-        edad = unaEdad; 
+
+    public Persona(String nombre, int dni, int edad) {
+        this.nombre = nombre;
+        this.dni = dni;
+        this.edad = edad;
     }
     
-    public Persona(){
-     
+    public String getNombre() {
+        return nombre;
     }
 
-    public int getDNI() {
-        return DNI;
+    public int getDni() {
+        return dni;
     }
 
     public int getEdad() {
         return edad;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setDNI(int unDNI) {
-        DNI = unDNI;
-    }
-
-    public void setEdad(int unaEdad) {
-        edad = unaEdad;
-    }
-
-    public void setNombre(String unNombre) {
-        nombre = unNombre;
-    }
-    
     public String toString(){
         String aux; 
-        aux = "Mi nombre es " + nombre + ", mi DNI es " + DNI + " y tengo " + edad + " años.";
+        aux = "Mi nombre es " + getNombre() + ", mi DNI es " + getDni() + " y tengo " + getEdad() + " años.";
         return aux;
     }
     

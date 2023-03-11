@@ -13,49 +13,52 @@ public class Triangulo extends Figura {
     private double l2;
     private double l3;
 
-    
-    public Triangulo(double unl1, double unl2, double unl3, String unColorRelleno, String unColorLinea){
-        super(unColorRelleno,unColorLinea);
-        setLado1(unl1);
-        setLado2(unl2);
-        setLado3(unl3);
+    public Triangulo(double l1, double l2, double l3, String colorRelleno, String colorLinea) {
+        super(colorRelleno, colorLinea);
+        this.l1 = l1;
+        this.l2 = l2;
+        this.l3 = l3;
     }
-    
-    // LADOS
-    public double getLado1(){
+
+    public double getL1() {
         return l1;
     }
-    public double getLado2(){
+
+    public void setL1(double l1) {
+        this.l1 = l1;
+    }
+
+    public double getL2() {
         return l2;
     }
-    public double getLado3(){
+
+    public void setL2(double l2) {
+        this.l2 = l2;
+    }
+
+    public double getL3() {
         return l3;
     }
-    public void setLado1(double l){
-        l1 = l;
+
+    public void setL3(double l3) {
+        this.l3 = l3;
     }
-    public void setLado2(double l){
-        l2 = l;
-    }
-    public void setLado3(double l){
-        l3 = l;
-    }
-    // FIN LADOS
-    
-    
+
+    @Override
     public double calcularPerimetro(){
-        return getLado1()+getLado2()+getLado3();
+        return getL1()+getL2()+getL3();
     }
+    @Override
     public double calcularArea(){
         double sp = calcularPerimetro()/2;
-        return Math.sqrt(sp*(sp-getLado1())*(sp-getLado2())*(sp-getLado3()));
+        return Math.sqrt(sp*(sp-getL1())*(sp-getL2())*(sp-getL3()));
     }
     
     @Override
     public String toString(){
         return  super.toString()+
-                " L1: "+getLado1()+
-                " L2: "+getLado2()+
-                " L3: "+getLado3();
+                " L1: "+getL1()+
+                " L2: "+getL2()+
+                " L3: "+getL3();
     }
 }
